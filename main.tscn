@@ -1,0 +1,186 @@
+[gd_scene load_steps=14 format=3 uid="uid://c3grje8axcndk"]
+
+[ext_resource type="Texture2D" uid="uid://c0jmv8ckxl35h" path="res://Sprites/boardbg.png" id="1_o5534"]
+[ext_resource type="Script" path="res://BoardContainer.gd" id="2_sgujx"]
+[ext_resource type="Texture2D" uid="uid://drbt4t5hfgn6p" path="res://Sprites/selected.png" id="4_28kaw"]
+[ext_resource type="Script" path="res://GameManager.gd" id="4_yc5xf"]
+[ext_resource type="Script" path="res://BoardArea.gd" id="5_7fp7b"]
+[ext_resource type="Texture2D" uid="uid://bi270abnft48e" path="res://Sprites/ball.png" id="6_q6k18"]
+[ext_resource type="Script" path="res://NextBall.gd" id="7_ep7td"]
+[ext_resource type="Script" path="res://ControlButtons.gd" id="9_5vfbu"]
+[ext_resource type="Script" path="res://Logger.gd" id="9_t7ova"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kqv1c"]
+size = Vector2(1.44, 1.44)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ryp0b"]
+font_size = 20
+
+[sub_resource type="LabelSettings" id="LabelSettings_g27e0"]
+font_size = 30
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Theme" id="Theme_ufve7"]
+
+[node name="Main" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="BoardContainer" type="Node2D" parent="."]
+script = ExtResource("2_sgujx")
+
+[node name="Background" type="Sprite2D" parent="BoardContainer"]
+texture = ExtResource("1_o5534")
+
+[node name="SelectedHighlight" type="Sprite2D" parent="BoardContainer"]
+visible = false
+texture = ExtResource("4_28kaw")
+
+[node name="BoardArea" type="Area2D" parent="BoardContainer"]
+scale = Vector2(200, 200)
+script = ExtResource("5_7fp7b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BoardContainer/BoardArea"]
+visible = false
+position = Vector2(3.57628e-07, 1.43051e-08)
+shape = SubResource("RectangleShape2D_kqv1c")
+
+[node name="Scoreboard" type="Label" parent="."]
+offset_left = -143.0
+offset_top = 149.0
+offset_right = -91.0
+offset_bottom = 180.0
+text = "Score: 0"
+label_settings = SubResource("LabelSettings_ryp0b")
+
+[node name="NextDisplay" type="Node2D" parent="."]
+
+[node name="Label" type="Label" parent="NextDisplay"]
+offset_left = 159.0
+offset_top = -139.0
+offset_right = 211.0
+offset_bottom = -108.0
+text = "Next:"
+label_settings = SubResource("LabelSettings_ryp0b")
+
+[node name="NextBall" type="Sprite2D" parent="NextDisplay"]
+position = Vector2(184, -95)
+texture = ExtResource("6_q6k18")
+script = ExtResource("7_ep7td")
+
+[node name="NextBall2" type="Sprite2D" parent="NextDisplay"]
+position = Vector2(184, -61)
+texture = ExtResource("6_q6k18")
+script = ExtResource("7_ep7td")
+
+[node name="NextBall3" type="Sprite2D" parent="NextDisplay"]
+position = Vector2(184, -27)
+texture = ExtResource("6_q6k18")
+script = ExtResource("7_ep7td")
+
+[node name="GameOverDisplay" type="Node2D" parent="."]
+visible = false
+
+[node name="GameOverLabel" type="Label" parent="GameOverDisplay"]
+z_index = 1
+offset_left = -86.0
+offset_top = -22.0
+offset_right = 88.0
+offset_bottom = 23.0
+text = "GAME OVER"
+label_settings = SubResource("LabelSettings_g27e0")
+
+[node name="Polygon2D" type="Polygon2D" parent="GameOverDisplay"]
+position = Vector2(0.494858, 2.65241e-06)
+scale = Vector2(1.04709, 1.0507)
+color = Color(0.666667, 0.666667, 0.666667, 0.698039)
+polygon = PackedVector2Array(137.051, -137.051, 137.051, 137.051, -137.996, 137.051, -137.996, -137.051)
+
+[node name="Logger" type="Node2D" parent="."]
+script = ExtResource("9_t7ova")
+
+[node name="GameManager" type="Node2D" parent="."]
+script = ExtResource("4_yc5xf")
+colors = Array[Color]([Color(1, 0.196078, 0.196078, 1), Color(0.196078, 0.196078, 1, 1), Color(1, 1, 0.196078, 1), Color(0, 1, 0.0156863, 1), Color(0, 1, 1, 1), Color(1, 0, 1, 1), Color(0.196078, 0.196078, 0.196078, 1), Color(1, 1, 1, 1)])
+
+[node name="ControlButtons" type="VBoxContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 155.0
+offset_top = 31.0
+offset_right = 257.0
+offset_bottom = 144.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 7
+alignment = 2
+script = ExtResource("9_5vfbu")
+
+[node name="UndoButton" type="Button" parent="ControlButtons"]
+layout_mode = 2
+theme = SubResource("Theme_ufve7")
+text = "Undo
+"
+
+[node name="NewGameButton" type="Button" parent="ControlButtons"]
+layout_mode = 2
+theme = SubResource("Theme_ufve7")
+text = "New Game"
+
+[node name="AbortButton" type="Button" parent="ControlButtons"]
+layout_mode = 2
+theme = SubResource("Theme_ufve7")
+text = "Exit Game"
+
+[node name="Button" type="Button" parent="ControlButtons"]
+layout_mode = 2
+text = "Print Board"
+
+[node name="GameReviewContainer" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -65.0
+offset_top = 194.0
+offset_right = -65.0
+offset_bottom = 194.0
+
+[node name="ControlBox" type="HBoxContainer" parent="GameReviewContainer"]
+layout_mode = 1
+offset_right = 131.0
+offset_bottom = 31.0
+metadata/_edit_use_anchors_ = true
+
+[node name="BackToStart" type="Button" parent="GameReviewContainer/ControlBox"]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+text = "<<"
+
+[node name="Back" type="Button" parent="GameReviewContainer/ControlBox"]
+layout_mode = 2
+text = "<"
+
+[node name="Label" type="Label" parent="GameReviewContainer/ControlBox"]
+layout_mode = 2
+text = "0/0"
+
+[node name="Next" type="Button" parent="GameReviewContainer/ControlBox"]
+layout_mode = 2
+text = ">"
+
+[node name="NextToEnd" type="Button" parent="GameReviewContainer/ControlBox"]
+layout_mode = 2
+text = ">>"
+
+[connection signal="input_event" from="BoardContainer/BoardArea" to="BoardContainer/BoardArea" method="_on_input_event"]
+[connection signal="pressed" from="ControlButtons/UndoButton" to="ControlButtons" method="_on_undo_button_pressed"]
+[connection signal="pressed" from="ControlButtons/NewGameButton" to="ControlButtons" method="_on_new_game_button_pressed"]
+[connection signal="pressed" from="ControlButtons/AbortButton" to="ControlButtons" method="_on_abort_button_pressed"]
+[connection signal="pressed" from="ControlButtons/Button" to="GameManager" method="_on_button_pressed"]
+[connection signal="pressed" from="GameReviewContainer/ControlBox/BackToStart" to="GameManager" method="_on_back_to_start_pressed"]
+[connection signal="pressed" from="GameReviewContainer/ControlBox/Back" to="GameManager" method="_on_back_pressed"]
+[connection signal="pressed" from="GameReviewContainer/ControlBox/Next" to="GameManager" method="_on_next_pressed"]
+[connection signal="pressed" from="GameReviewContainer/ControlBox/NextToEnd" to="GameManager" method="_on_next_to_end_pressed"]

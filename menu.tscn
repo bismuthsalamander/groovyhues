@@ -1,0 +1,75 @@
+[gd_scene load_steps=5 format=3 uid="uid://dgvlno221toil"]
+
+[ext_resource type="Script" path="res://MainMenu.gd" id="1_0r0ls"]
+[ext_resource type="Script" path="res://OptionsOverlay.gd" id="3_ee7ea"]
+[ext_resource type="PackedScene" uid="uid://cja0he77dcot7" path="res://options.tscn" id="4_jhkcw"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_lnvmy"]
+font_size = 80
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 4
+shadow_color = Color(0.815686, 0, 0, 0)
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0r0ls")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+size_flags_stretch_ratio = 1.22
+text = "Groovy Hues"
+label_settings = SubResource("LabelSettings_lnvmy")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ButtonContainer" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.22
+
+[node name="NewGame" type="Button" parent="VBoxContainer/ButtonContainer"]
+layout_mode = 2
+text = "New Game"
+
+[node name="SettingsButton" type="Button" parent="VBoxContainer/ButtonContainer"]
+layout_mode = 2
+text = "Settings"
+
+[node name="LoadButton" type="Button" parent="VBoxContainer/ButtonContainer"]
+layout_mode = 2
+text = "Review Game"
+
+[node name="Exit" type="Button" parent="VBoxContainer/ButtonContainer"]
+layout_mode = 2
+text = "Exit"
+
+[node name="OptionsOverlay" parent="." instance=ExtResource("4_jhkcw")]
+visible = false
+layout_mode = 1
+script = ExtResource("3_ee7ea")
+
+[node name="LoadTranscript" type="FileDialog" parent="."]
+size = Vector2i(392, 400)
+ok_button_text = "Open"
+
+[connection signal="pressed" from="VBoxContainer/ButtonContainer/NewGame" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="VBoxContainer/ButtonContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/ButtonContainer/LoadButton" to="." method="_on_load_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/ButtonContainer/Exit" to="." method="_on_exit_pressed"]
+[connection signal="file_selected" from="LoadTranscript" to="." method="_on_load_transcript_file_selected"]

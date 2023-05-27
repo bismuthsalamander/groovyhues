@@ -1,0 +1,70 @@
+[gd_scene load_steps=4 format=3 uid="uid://c674k5n7mnqtk"]
+
+[ext_resource type="Texture2D" uid="uid://c0jmv8ckxl35h" path="res://Sprites/boardbg.png" id="1_7e7et"]
+[ext_resource type="Script" path="res://BoardBG.gd" id="2_i6akn"]
+[ext_resource type="Texture2D" uid="uid://bi270abnft48e" path="res://Sprites/ball.png" id="3_vgvo4"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.89
+
+[node name="BoardBG" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 9.85
+texture = ExtResource("1_7e7et")
+stretch_mode = 5
+script = ExtResource("2_i6akn")
+
+[node name="ColorRect2" type="ColorRect" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+color = Color(0, 1, 1, 1)
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/ColorRect2"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Next:"
+
+[node name="ColorRect2" type="ColorRect" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+color = Color(0, 0, 1, 1)
+
+[node name="Container" type="MarginContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/Container"]
+layout_mode = 2
+texture = ExtResource("3_vgvo4")
+stretch_mode = 2
+
+[connection signal="gui_input" from="MarginContainer/VBoxContainer/HBoxContainer/BoardBG" to="MarginContainer/VBoxContainer/HBoxContainer/BoardBG" method="_on_gui_input"]

@@ -1,0 +1,86 @@
+[gd_scene load_steps=4 format=3 uid="uid://cja0he77dcot7"]
+
+[sub_resource type="Theme" id="Theme_m0pb8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xty8j"]
+bg_color = Color(0.6, 0.6, 0.6, 0.988235)
+
+[sub_resource type="LabelSettings" id="LabelSettings_wyotd"]
+
+[node name="OptionsOverlay" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = SubResource("Theme_m0pb8")
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_xty8j")
+
+[node name="CenterContainer3" type="CenterContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/CenterContainer3"]
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/CenterContainer3/VBoxContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/CenterContainer3/VBoxContainer/GridContainer"]
+layout_mode = 2
+theme_override_constants/margin_right = 20
+
+[node name="AnimtionLabel" type="Label" parent="MarginContainer/CenterContainer3/VBoxContainer/GridContainer/MarginContainer"]
+layout_mode = 2
+text = "Animation Mode"
+label_settings = SubResource("LabelSettings_wyotd")
+
+[node name="AnimationList" type="OptionButton" parent="MarginContainer/CenterContainer3/VBoxContainer/GridContainer"]
+layout_mode = 2
+item_count = 3
+popup/item_0/text = "Smooth"
+popup/item_0/id = 0
+popup/item_1/text = "Step"
+popup/item_1/id = 1
+popup/item_2/text = "None"
+popup/item_2/id = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/CenterContainer3/VBoxContainer/GridContainer"]
+layout_mode = 2
+theme_override_constants/margin_right = 20
+
+[node name="WildLabel" type="Label" parent="MarginContainer/CenterContainer3/VBoxContainer/GridContainer/MarginContainer2"]
+layout_mode = 2
+text = "Wilds"
+
+[node name="WildList" type="OptionButton" parent="MarginContainer/CenterContainer3/VBoxContainer/GridContainer"]
+layout_mode = 2
+item_count = 2
+popup/item_0/text = "Off"
+popup/item_0/id = 0
+popup/item_1/text = "On"
+popup/item_1/id = 1
+
+[node name="CloseButton" type="Button" parent="MarginContainer/CenterContainer3/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Close"
+
+[connection signal="item_selected" from="MarginContainer/CenterContainer3/VBoxContainer/GridContainer/AnimationList" to="." method="_on_animation_list_item_selected"]
+[connection signal="item_selected" from="MarginContainer/CenterContainer3/VBoxContainer/GridContainer/WildList" to="." method="_on_wild_list_item_selected"]
+[connection signal="pressed" from="MarginContainer/CenterContainer3/VBoxContainer/CloseButton" to="." method="_on_close_button_pressed"]
